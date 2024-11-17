@@ -15,13 +15,12 @@ class Game:
         self.font = pg.font.Font(None, 36)
 
         self.input_x = InputBox(620, 50, 50, 36, '0')
-        self.input_y = InputBox(680, 50, 50, 36, '0')
+        self.input_y = InputBox(680, 50, 50, 36, '7')
         self.start_button = Button(620, 100, 150, 40, "Start")
-        self.stop_button = Button(620, 150, 150, 40, "Stop")
-        self.undo_button = Button(620, 200, 150, 40, "Undo")
-        self.hide_button = Button(620, 250, 150, 40, "Hide/Show")
-        self.save_button = Button(620, 300, 150, 40, "Save Image")
-        self.ui_elements = [self.input_x, self.input_y, self.start_button, self.stop_button, self.undo_button, self.hide_button, self.save_button]
+        self.undo_button = Button(620, 150, 150, 40, "Undo")
+        self.hide_button = Button(620, 200, 150, 40, "Hide/Show")
+        self.save_button = Button(620, 250, 150, 40, "Save Image")
+        self.ui_elements = [self.input_x, self.input_y, self.start_button, self.undo_button, self.hide_button, self.save_button]
 
         # Логіка
         self.show_moves = False
@@ -42,8 +41,6 @@ class Game:
                     if element.handle_event(event):
                         if element == self.start_button:
                             self.start_game()
-                        elif element == self.stop_button:
-                            self.stop_game()
                         elif element == self.undo_button:
                             self.undo_move()
                         elif element == self.hide_button: 
@@ -139,14 +136,13 @@ class Game:
                 self.history = [(x, y)]
                 self.is_running = True 
                 self.show_moves = True
-                self.valid_moves = self.horse.possible_moves() 
+                self.valid_moves = self.horse.possible_moves()
+                if not self.is_visible:
+                    self.is_visible = True
             else:
                 print("Координати поза межами дошки!")
         except ValueError:
             print("Некоректні координати!")
-
-    def stop_game(self):
-        self.is_running = False
 
     def undo_move(self):
         if len(self.history) > 1:
@@ -183,6 +179,7 @@ class Game:
 
     def toggle_visibility(self):
         self.is_visible = not self.is_visible
+        self.is_running = not self.is_running
 
 
 class Chessboard:
