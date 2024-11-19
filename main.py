@@ -14,8 +14,8 @@ class Game:
         self.horse = Horse(0, 0, screen=self.screen)
         self.font = pg.font.Font(None, 36)
 
-        self.input_x = InputBox(620, 50, 50, 36, '0')
-        self.input_y = InputBox(680, 50, 50, 36, '7')
+        self.input_x = InputBox(620, 50, 50, 36, '1')
+        self.input_y = InputBox(680, 50, 50, 36, '8')
         self.start_button = Button(620, 100, 150, 40, "Start")
         self.undo_button = Button(620, 150, 150, 40, "Undo")
         self.hide_button = Button(620, 200, 150, 40, "Hide/Show")
@@ -127,8 +127,8 @@ class Game:
 
     def start_game(self):
         try:
-            x = int(self.input_x.text)
-            y = int(self.input_y.text)
+            x = int(self.input_x.text) - 1
+            y = int(self.input_y.text) - 1
             if 0 <= x < 8 and 0 <= y < 8:
                 self.horse.set_position(x, y)
                 self.step_counter = 1 
